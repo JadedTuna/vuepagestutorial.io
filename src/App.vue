@@ -1,23 +1,35 @@
-<script setup>
+<script>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+//import HelloWorld from './components/HelloWorld.vue'
+import { routes } from './router';
+export default {
+  name: 'App',
+  data() {
+    return {
+      routes
+    };
+  },
+  methods: {
+    formatRouteName(name) {
+      // Capitalize the first letter for display in the navigation bar
+      return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+  }
+};
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div>
+    <nav>
+      <RouterLink 
+      v-for="route in routes" 
+      :key="route.path" 
+      :to="route.path">
+        {{ formatRouteName(route.name) }}
+      </RouterLink>
+    </nav>
+    <RouterView />
+  </div>
 </template>
 
 <style scoped>
